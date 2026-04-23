@@ -35,7 +35,7 @@ function Dashboard() {
     e.preventDefault();
     setError(''); setSuccess('');
     try {
-      await axios.post('http://localhost:5000/api/grievances', form, authHeader);
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/grievances`, form, authHeader);
       setSuccess('Grievance submitted successfully!');
       setForm({ title: '', description: '', category: 'Academic' });
       fetchGrievances();
@@ -47,7 +47,7 @@ function Dashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this grievance?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/grievances/${id}`, authHeader);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/grievances/${id}`, authHeader);
       setSuccess('Grievance deleted successfully!');
       fetchGrievances();
     } catch (err) {
@@ -57,7 +57,7 @@ function Dashboard() {
 
   const handleEditSave = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/grievances/${id}`, editForm, authHeader);
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/grievances/${id}`, editForm, authHeader);
       setSuccess('Grievance updated successfully!');
       setEditId(null);
       fetchGrievances();
@@ -70,7 +70,7 @@ function Dashboard() {
     if (!searchTerm.trim()) { fetchGrievances(); return; }
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/grievances/search?title=${searchTerm}`,
+        `${process.env.REACT_APP_API_URL}/api/grievances/search?title=${searchTerm}`,
         authHeader
       );
       setGrievances(res.data);
@@ -89,7 +89,7 @@ function Dashboard() {
     <div style={styles.container}>
       {/* Navbar */}
       <div style={styles.navbar}>
-        <h1 style={styles.navTitle}>🎓 SGMS Portal</h1>
+        <h1 style={styles.navTitle}>🎓 Student Grievance Management</h1>
         <div style={styles.navRight}>
           <span style={styles.welcomeText}>👤 {student?.name}</span>
           <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
@@ -97,7 +97,6 @@ function Dashboard() {
       </div>
 
       <div style={styles.content}>
-        {/* Alerts */}
         {error && <div style={styles.error}>{error}</div>}
         {success && <div style={styles.successMsg}>{success}</div>}
 
@@ -170,7 +169,6 @@ function Dashboard() {
             grievances.map((g) => (
               <div key={g._id} style={styles.grievanceCard}>
                 {editId === g._id ? (
-                  // Edit Mode
                   <div style={styles.editForm}>
                     <input
                       value={editForm.title}
@@ -210,7 +208,6 @@ function Dashboard() {
                     </div>
                   </div>
                 ) : (
-                  // View Mode
                   <>
                     <div style={styles.grievanceHeader}>
                       <h3 style={styles.grievanceTitle}>{g.title}</h3>
@@ -226,9 +223,7 @@ function Dashboard() {
                     <p style={styles.grievanceDesc}>{g.description}</p>
                     <div style={styles.grievanceMeta}>
                       <span style={styles.categoryBadge}>{g.category}</span>
-                      <span style={styles.dateText}>
-                        {new Date(g.date).toLocaleDateString()}
-                      </span>
+                      <span style={styles.dateText}>{new Date(g.date).toLocaleDateString()}</span>
                     </div>
                     <div style={styles.actionRow}>
                       <button
