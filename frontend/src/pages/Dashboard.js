@@ -24,7 +24,7 @@ function Dashboard() {
 
   const fetchGrievances = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/grievances', authHeader);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/grievances`, authHeader);
       setGrievances(res.data);
     } catch (err) {
       setError('Failed to fetch grievances');

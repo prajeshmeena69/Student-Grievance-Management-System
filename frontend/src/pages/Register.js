@@ -17,7 +17,7 @@ function Register() {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/register', form);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/register`, form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('student', JSON.stringify(res.data));
       navigate('/dashboard');
