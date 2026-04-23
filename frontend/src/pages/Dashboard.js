@@ -89,7 +89,7 @@ function Dashboard() {
     <div style={styles.container}>
       {/* Navbar */}
       <div style={styles.navbar}>
-        <h1 style={styles.navTitle}>🎓 Student Grievance Management</h1>
+        <h1 style={styles.navTitle}>🎓 SGMS Portal</h1>
         <div style={styles.navRight}>
           <span style={styles.welcomeText}>👤 {student?.name}</span>
           <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
