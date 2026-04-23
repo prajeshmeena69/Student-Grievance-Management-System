@@ -11,7 +11,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://student-grievance-frontend.onrender.com'
+    'https://student-grievance-frontend-03x6.onrender.com'
   ],
   credentials: true
 }));
